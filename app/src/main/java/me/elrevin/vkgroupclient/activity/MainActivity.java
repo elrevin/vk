@@ -1,26 +1,24 @@
-package me.elrevin.vkgroupclient;
+package me.elrevin.vkgroupclient.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.util.VKUtil;
 
-import java.util.Arrays;
-
+import me.elrevin.vkgroupclient.CurrentUser;
+import me.elrevin.vkgroupclient.R;
+import me.elrevin.vkgroupclient.common.manager.CommonFragmentManager;
 import me.elrevin.vkgroupclient.consts.ApiConstants;
+import me.elrevin.vkgroupclient.fragments.BaseFragment;
 import me.elrevin.vkgroupclient.mvp.presenter.MainPresenter;
 import me.elrevin.vkgroupclient.mvp.view.MainView;
 
-public class MainActivity extends MvpAppCompatActivity implements MainView {
+public class MainActivity extends BaseActivity implements MainView {
 
     @InjectPresenter
     MainPresenter mainPresenter;
@@ -28,10 +26,13 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         mainPresenter.checkAuth();
 
+    }
+
+    @Override
+    protected int getMainContentLayout() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -41,6 +42,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
             public void onResult(VKAccessToken res) {
                 mainPresenter.checkAuth();
             }
+
             @Override
             public void onError(VKError error) {
                 // Произошла ошибка авторизации (например, пользователь запретил авторизацию)
