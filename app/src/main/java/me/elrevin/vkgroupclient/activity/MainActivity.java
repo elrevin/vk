@@ -11,10 +11,12 @@ import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
 import me.elrevin.vkgroupclient.CurrentUser;
+import me.elrevin.vkgroupclient.EvkApplication;
 import me.elrevin.vkgroupclient.R;
 import me.elrevin.vkgroupclient.common.manager.CommonFragmentManager;
 import me.elrevin.vkgroupclient.consts.ApiConstants;
 import me.elrevin.vkgroupclient.fragments.BaseFragment;
+import me.elrevin.vkgroupclient.fragments.NewsFeedFragment;
 import me.elrevin.vkgroupclient.mvp.presenter.MainPresenter;
 import me.elrevin.vkgroupclient.mvp.view.MainView;
 
@@ -26,6 +28,8 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EvkApplication.getApplicationComponent().inject(this);
+
         mainPresenter.checkAuth();
 
     }
@@ -60,5 +64,6 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void signedId() {
         Toast.makeText(this, "Current user id: " + CurrentUser.getId(), Toast.LENGTH_LONG).show();
+        setContent(new NewsFeedFragment());
     }
 }

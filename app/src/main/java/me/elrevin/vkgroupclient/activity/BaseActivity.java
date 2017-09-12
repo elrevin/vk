@@ -7,20 +7,25 @@ import android.widget.FrameLayout;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 
+import javax.inject.Inject;
+
+import me.elrevin.vkgroupclient.EvkApplication;
 import me.elrevin.vkgroupclient.R;
 import me.elrevin.vkgroupclient.common.manager.CommonFragmentManager;
 import me.elrevin.vkgroupclient.fragments.BaseFragment;
 
 public abstract class BaseActivity extends MvpAppCompatActivity {
+
+    @Inject
     CommonFragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_base);
+        EvkApplication.getApplicationComponent().inject(this);
 
-        fragmentManager = new CommonFragmentManager();
+        setContentView(R.layout.activity_base);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
